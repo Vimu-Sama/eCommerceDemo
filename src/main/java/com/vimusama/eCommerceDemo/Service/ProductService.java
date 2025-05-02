@@ -1,27 +1,41 @@
 package com.vimusama.eCommerceDemo.Service;
-
 import com.vimusama.eCommerceDemo.Model.Product;
+import com.vimusama.eCommerceDemo.Repository.ProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ProductService {
-    private ArrayList<Product> products ;
+
+    @Autowired
+    private ProductRepo databaseRepo ;
 
     public ProductService(){
-        this.products = new ArrayList<>() ;
-        this.addProducts(new Product(101, "Table", 10000));
-        this.addProducts(new Product(102, "Laptop", 80000));
-        this.addProducts(new Product(103, "Water Bottle", 800));
-        this.addProducts(new Product(104, "Ipad", 72000));
     }
 
     public void addProducts(Product product){
-        this.products.add(product) ;
+        databaseRepo.save(product) ;
     }
 
-    public ArrayList<Product> getProducts(){
-        return this.products ;
+    public List<Product> getProducts(){
+        return databaseRepo.findAll();
+    }
+
+    public Optional<Product> getSpecificProduct(int id){
+        return databaseRepo.findById(id) ;
+    }
+
+    public void updateProduct(Product p){
+        databaseRepo.save(p) ;
+    }
+
+    public Optional<Product> deleteProduct(int id) {
+        Optional<Product> prod = databaseRepo.findById(id) ;
+        if(prod.isPresent()) {
+            databaseRepo.deleteById(id);
+        }
+        return prod ;
     }
 }

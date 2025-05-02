@@ -1,9 +1,19 @@
 package com.vimusama.eCommerceDemo.Model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Product {
+
+    @Id
     private int productId ;
     private String productName ;
     private int productPrice ;
+
+    public Product(){
+
+    }
 
     public Product(int productId, String productName, int productPrice) {
         this.productId = productId;
