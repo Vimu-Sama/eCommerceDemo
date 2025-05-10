@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
-    @RequestMapping("/api/v1/")
+    @RequestMapping("/api")
     public String showHomePage(){
         return ("Welcome to the E-Commerce Website!") ;
     }

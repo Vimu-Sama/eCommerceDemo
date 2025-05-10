@@ -5,12 +5,16 @@ import java.util.Optional;
 
 import com.vimusama.eCommerceDemo.Service.ProductService;
 import com.vimusama.eCommerceDemo.Model.Product;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class ProductController {
 
     @Autowired
@@ -26,9 +30,19 @@ public class ProductController {
         return productService.getSpecificProduct(prodId) ;
     }
 
+    @GetMapping("/product/{id}/image")
+    private ResponseEntity<byte[]> fetchImage(@PathVariable int id){
+        return productService.fetchProductImage(id) ;
+    }
+
     @PostMapping("/products/new")
-    private void storeProduct(@RequestBody Product prod){
-        productService.addProducts(prod);
+    private ResponseEntity<?> storeProduct(@RequestPart Product product, @RequestPart MultipartFile imageFile){
+        try{
+            Product prod = productService.addProducts(product, imageFile);
+            return new ResponseEntity<>(prod,HttpStatus.CREATED) ;
+        } catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR) ;
+        }
     }
 
     @PutMapping("/products/update")
