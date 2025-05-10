@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -38,16 +39,33 @@ public class ProductService {
         return databaseRepo.findById(id) ;
     }
 
-    public void updateProduct(Product p){
-        databaseRepo.save(p) ;
+    public ResponseEntity<?> updateProduct(int id, Product updatedProduct, MultipartFile imageFile) throws IOException {
+        Optional<Product> productOptional = databaseRepo.findById(id) ;
+        if(productOptional.isPresent()){
+            Product originalProduct = productOptional.get() ;
+            if(originalProduct.getImageData() != imageFile.getBytes() ||
+                originalProduct.getImageName().equals(imageFile.getOriginalFilename()) ||
+                originalProduct.getImageType().equals(imageFile.getContentType())){
+
+                updatedProduct.setImageType(imageFile.getContentType());
+                updatedProduct.setImageName(imageFile.getOriginalFilename());
+                updatedProduct.setImageData(imageFile.getBytes());
+                updatedProduct.setProductId(originalProduct.getProductId());
+
+            }
+            originalProduct =  databaseRepo.save(updatedProduct) ;
+            return ResponseEntity.status(HttpStatus.OK).build() ;
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build() ;
     }
 
-    public Optional<Product> deleteProduct(int id) {
+    public ResponseEntity<?>  deleteProduct(int id) {
         Optional<Product> prod = databaseRepo.findById(id) ;
         if(prod.isPresent()) {
             databaseRepo.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
-        return prod ;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build() ;
     }
 
     public ResponseEntity<byte []> fetchProductImage(int id){

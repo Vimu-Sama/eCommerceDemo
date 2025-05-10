@@ -44,14 +44,18 @@ public class ProductController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR) ;
         }
     }
-
-    @PutMapping("/products/update")
-    private void updateProduct(@RequestBody Product prod){
-        productService.updateProduct(prod) ;
+    @PutMapping("/product/update/{id}")
+    private ResponseEntity<?> updateProduct(@PathVariable int id, @RequestPart Product product, @RequestPart MultipartFile imageFile){
+        System.out.println("The api was called for id-> " + id) ;
+        try{
+            return productService.updateProduct(id, product, imageFile) ;
+        } catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR) ;
+        }
     }
 
     @DeleteMapping("/products/delete/{id}")
-    private void deleteProduct(@PathVariable int id){
-        productService.deleteProduct(id) ;
+    private ResponseEntity deleteProduct(@PathVariable int id){
+        return productService.deleteProduct(id) ;
     }
 }
