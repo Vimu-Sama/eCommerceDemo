@@ -1,10 +1,18 @@
+# Ignore helper and documentation files
 HELP.md
+
+# Ignore Maven build outputs
 target/
-!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# Ignore Maven wrapper JAR
+!.mvn/wrapper/maven-wrapper.jar
+
+# Ignore local application properties
+src/main/resources/application.properties
+
+# Eclipse / STS
 .apt_generated
 .classpath
 .factorypath
@@ -13,21 +21,23 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Gradle build outputs
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+# VS Code
 .vscode/
