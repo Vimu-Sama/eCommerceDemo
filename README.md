@@ -13,3 +13,4 @@ ProductController → ProductService → ORM (Hibernate) → Database (PostgreSQ
 3) **ORM (Hibernate + JPA)**: ORM (Object-Relational Mapping) simplifies database interactions by abstracting SQL queries into Java objects. In this project, we use **Hibernate**, a widely adopted ORM tool that implements the **JPA (Java Persistence API)** specification. JPA defines a standard way to map Java objects to relational database tables, allowing developers to switch ORM tools with minimal changes and promoting code reusability and portability.
 
 The project is currently under development, and further enhancements such as update operations, product listing, and user authentication may be added in the future.
+The project database is hosted on Supabase and uses postgres for the CRUD operations.
