@@ -14,3 +14,5 @@ ProductController → ProductService → ORM (Hibernate) → Database (PostgreSQ
 
 The project is currently under development, and further enhancements such as update operations, product listing, and user authentication may be added in the future.
 The project database is hosted on Supabase and uses postgres for the CRUD operations.
+The application.properties has been made private to ensure the privacy of the database hosted remotely. Today's task changed files which are not committed intentionally and more of a click work.
+Found new stuff about there being a concept of prepared statement in postgres and they caused error when I was trying to connect with Database
